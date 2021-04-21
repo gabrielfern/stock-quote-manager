@@ -21,8 +21,8 @@ public class StockService {
         return stockRepository.findById(id).orElse(null);
     }
 
-    public void add(Stock stock) {
-        stockRepository.save(stock);
+    public Stock add(Stock stock) {
+        return stockRepository.save(stock);
     }
 
 }
