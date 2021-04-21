@@ -8,19 +8,26 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class StockManagerService {
 
-    public boolean exists(Stock stock) {
-        RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<Stock[]> resp = restTemplate.getForEntity("http://localhost:8080/stock", Stock[].class);
-        Stock[] stocks = resp.getBody();
+    private Stock[] stocksCache;
 
-        if (stocks != null) {
-            for (Stock currStock : stocks) {
+    public boolean exists(Stock stock) {
+        if (stocksCache == null)
+            this.populateCache();
+
+        if (stocksCache != null) {
+            for (Stock currStock : stocksCache) {
                 if (stock.getId().equals(currStock.getId()))
                     return true;
             }
         }
 
         return false;
+    }
+
+    public void populateCache() {
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<Stock[]> resp = restTemplate.getForEntity("http://localhost:8080/stock", Stock[].class);
+        stocksCache = resp.getBody();
     }
 
 }
