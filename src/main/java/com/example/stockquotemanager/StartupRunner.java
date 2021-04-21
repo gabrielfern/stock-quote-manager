@@ -10,8 +10,11 @@ import org.springframework.web.client.RestTemplate;
 @Component
 public class StartupRunner implements ApplicationRunner {
 
-    @Value("${HOST}")
-    private String host;
+    @Value("${STOCK_QUOTE_MANAGER_HOST:localhost}")
+    private String stockQuoteManagerHost;
+
+    @Value("${STOCK_MANAGER_HOST:localhost}")
+    private String stockManagerHost;
 
     @Override
     public void run(ApplicationArguments args) {
@@ -20,11 +23,11 @@ public class StartupRunner implements ApplicationRunner {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        String body = "{\"host\":\"" + host +
+        String body = "{\"host\":\"" + stockQuoteManagerHost +
                 "\",\"port\":8081}";
 
         HttpEntity<String> entity = new HttpEntity<>(body, headers);
-        restTemplate.postForEntity("http://localhost:8080/notification", entity, String.class);
+        restTemplate.postForEntity("http://" + stockManagerHost + ":8080/notification", entity, String.class);
     }
 
 }
