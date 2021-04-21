@@ -10,7 +10,7 @@ public class Stock {
     @Id
     private String id;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "stock_id")
     private List<StockQuote> stockQuotes;
 
