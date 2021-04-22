@@ -1,11 +1,14 @@
 # Stock Quotes Manager
 
-This application lets you register quotes for stocks, stocks
-must first be registered in the stock-manager application.
+This application lets you register stock quotes. It
+interacts with another application called stock-manager
+to decide if a certain stock is valid to be added to the
+Stock Quotes data. This application also uses MySQL
+as database.
 
 ## Build
 
-> ./mvnw clean package -DskipTests
+> mvn clean package -DskipTests
 
 > docker build -t stock-quote-manager .
 
@@ -19,3 +22,7 @@ must first be registered in the stock-manager application.
 
 You might need to change the environment variables
 depending on your system.
+
+## Run Unit Tests
+
+> mvn test

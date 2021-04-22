@@ -14,6 +14,8 @@ public class StockManagerService {
 
     private Stock[] stocksCache;
 
+    RestTemplate restTemplate = new RestTemplate();
+
     public boolean exists(Stock stock) {
         if (stocksCache == null)
             this.populateCache();
@@ -29,7 +31,6 @@ public class StockManagerService {
     }
 
     public void populateCache() {
-        RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<Stock[]> resp = restTemplate.getForEntity("http://" + stockManagerHost + ":8080/stock",
                 Stock[].class);
         stocksCache = resp.getBody();
